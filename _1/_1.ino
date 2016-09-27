@@ -1,12 +1,17 @@
+#include <EEPROM.h>
+
 #define UNSIGNED_LONG_MAX (2^32 - 1)
-int rf_receive_pin = A0;
-int threshold_high = 500;  // any value greater than this is considered HIGH
-int threshold_low = 200;  // any value less than this is considered LOW
+
+const int rf_receive_pin = A0;
+const int led_pin = 13;
+
+const int threshold_high = 500;  // any value greater than this is considered HIGH
+const int threshold_low = 200;  // any value less than this is considered LOW
+
 bool previous_state = LOW;
 unsigned long last_state_change_time = 0;  // time in microseconds
-int led_pin = 13;
 int count = 0;
-const unsigned int num_data_points = 300;
+const unsigned int num_data_points = 128;
 unsigned long data[num_data_points];  // stores the duration of each high/low state in microseconds
 
 void setup() {
@@ -25,11 +30,9 @@ void loop() {
   bool current_state = previous_state;
   if (val > threshold_high) {
     current_state = HIGH;
-    digitalWrite(led_pin, current_state);
   }
   if (val < threshold_low) {
     current_state = LOW;
-    digitalWrite(led_pin, current_state);
   }
   // Whenever the state changes, record how long the signal was in its previous state.
   if (current_state != previous_state) {
@@ -44,9 +47,9 @@ void loop() {
       // that messes with the logged numbers.
       for (int i = 0; i < num_data_points; i++) {
         if (i%2 == 0) {
-          Serial.print("high ");
+          Serial.print("high, ");
         } else {
-          Serial.print("low  ");
+          Serial.print("low,  ");
         }
         Serial.println(data[i]);
       }
