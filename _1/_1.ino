@@ -11,7 +11,10 @@ const int threshold_low = 200;  // any value less than this is considered LOW
 void setup() {
   Serial.begin(9600);
   pinMode(led_pin, OUTPUT);
-  // Start recording immediately.
+  record(true);
+}
+
+void record(bool on) {
   bool previous_state = LOW;
   unsigned long last_state_change_time = 0;
   int count = 0;
