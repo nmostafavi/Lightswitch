@@ -91,6 +91,7 @@ void record(bool on) {
 }
 
 void playback(bool on) {
+  Serial.println("Playing back...");
   for (int i = 0; i < num_data_points; i++) {
     bool state = i % 2;
     int address = i * sizeof(unsigned long);
@@ -103,6 +104,7 @@ void playback(bool on) {
     delayMicroseconds(value);
   }
   digitalWrite(rf_transmit_pin, LOW);
+  Serial.println("Finished.");
 }
 
 void chirp() {
