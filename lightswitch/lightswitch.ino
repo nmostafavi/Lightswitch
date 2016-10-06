@@ -92,13 +92,17 @@ void record(bool on) {
 
 void playback(bool on) {
   for (int i = 0; i < num_data_points; i++) {
+    bool state = i % 2;
     int address = i * sizeof(unsigned long);
     if (on == true) {
       address += num_data_points * sizeof(unsigned long);
     }
     unsigned long value = 0;
     EEPROM.get(address, value);
+    digitalWrite(rf_transmit_pin, state);
+    delayMicroseconds(value);
   }
+  digitalWrite(rf_transmit_pin, LOW);
 }
 
 void chirp() {
