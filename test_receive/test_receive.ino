@@ -7,8 +7,10 @@ const int threshold_high = 500;  // any value greater than this is considered HI
 const int threshold_low = 200;  // any value less than this is considered LOW
 
 bool previous_state = LOW;
+float moving_average = 0;
 
 void setup() {
+  Serial.begin(9600);
   pinMode(led_pin, OUTPUT);
 }
 
@@ -24,6 +26,7 @@ void loop() {
   if (val < threshold_low) {
     current_state = LOW;
   }
+  Serial.println(current_state);
   if (current_state != previous_state) {
     digitalWrite(led_pin, current_state);
     // Update current values for next loop iteration
