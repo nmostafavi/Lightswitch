@@ -22,12 +22,17 @@ void setup() {
   pinMode(bicolor_led_anode_pin, OUTPUT);
   pinMode(bicolor_led_cathode_pin, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(button_pin), button_press, FALLING);
-  playback(true);
+//  playback(true);
 }
 
 void loop() {
   if (button_pressed == true) {
-    record(true);
+    tone_up();
+    delay(500);
+    tone_mid();
+    delay(500);
+    tone_down();
+//    record(true);
     button_pressed = false;
   }
 }
@@ -107,10 +112,22 @@ void playback(bool on) {
   Serial.println("Finished.");
 }
 
-void chirp() {
-  unsigned int frequency = 2100;  // Hz
-  unsigned int duration = 100;  // ms
-  tone(speaker_pin, frequency, duration);
+void tone_mid() {
+  tone(speaker_pin, 1200, 100);
+  delay(100);
+  tone(speaker_pin, 1200, 100);
+}
+
+void tone_up() {
+  tone(speaker_pin, 600, 100);
+  delay(100);
+  tone(speaker_pin, 800, 100);
+}
+
+void tone_down() {
+  tone(speaker_pin, 800, 100);
+  delay(100);
+  tone(speaker_pin, 600, 100);
 }
 
 void led_red() {
