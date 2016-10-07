@@ -22,17 +22,10 @@ void setup() {
   pinMode(bicolor_led_anode_pin, OUTPUT);
   pinMode(bicolor_led_cathode_pin, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(button_pin), button_press, FALLING);
-//  playback(true);
 }
 
 void loop() {
   if (button_pressed == true) {
-    tone_up();
-    delay(500);
-    tone_mid();
-    delay(500);
-    tone_down();
-//    record(true);
     button_pressed = false;
   }
 }
@@ -95,6 +88,7 @@ void record(bool on) {
   }
 }
 
+/// Replays an RF signal stored in EEPROM
 void playback(bool on) {
   Serial.println("Playing back...");
   for (int i = 0; i < num_data_points; i++) {
@@ -112,34 +106,40 @@ void playback(bool on) {
   Serial.println("Finished.");
 }
 
+/// Plays a flat beep
 void tone_mid() {
   tone(speaker_pin, 1200, 100);
   delay(100);
   tone(speaker_pin, 1200, 100);
 }
 
+/// Plays an upward beep
 void tone_up() {
   tone(speaker_pin, 600, 100);
   delay(100);
   tone(speaker_pin, 800, 100);
 }
 
+/// Plays a downward beep
 void tone_down() {
   tone(speaker_pin, 800, 100);
   delay(100);
   tone(speaker_pin, 600, 100);
 }
 
+/// Turns the bi-color LED red
 void led_red() {
   digitalWrite(bicolor_led_anode_pin, HIGH);
   digitalWrite(bicolor_led_cathode_pin, LOW);
 }
 
+/// Turns the bi-color LED green
 void led_green() {
   digitalWrite(bicolor_led_anode_pin, LOW);
   digitalWrite(bicolor_led_cathode_pin, HIGH);
 }
 
+/// Turns the bi-color LED off
 void led_off() {
   digitalWrite(bicolor_led_anode_pin, LOW);
   digitalWrite(bicolor_led_cathode_pin, LOW);
