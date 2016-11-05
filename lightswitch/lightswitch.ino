@@ -1,4 +1,5 @@
 #include <EEPROM.h>
+#include "Piezo.h"
 
 #define UNSIGNED_LONG_MAX (2^32 - 1)
 
@@ -13,6 +14,8 @@ const int threshold_high = 500;  // any received value greater than this is cons
 const int threshold_low = 200;  // any received value less than this is considered LOW
 const unsigned int num_data_points = 128;  // number of data points stored in EEPROM for each recorded remote control signal
 volatile bool button_pressed = false;
+
+Piezo piezo(speaker_pin);
 
 void setup() {
   Serial.begin(9600);
@@ -104,27 +107,6 @@ void playback(bool on) {
   }
   digitalWrite(rf_transmit_pin, LOW);
   Serial.println("Finished.");
-}
-
-/// Plays a flat beep
-void tone_mid() {
-  tone(speaker_pin, 1200, 100);
-  delay(100);
-  tone(speaker_pin, 1200, 100);
-}
-
-/// Plays an upward beep
-void tone_up() {
-  tone(speaker_pin, 600, 100);
-  delay(100);
-  tone(speaker_pin, 800, 100);
-}
-
-/// Plays a downward beep
-void tone_down() {
-  tone(speaker_pin, 800, 100);
-  delay(100);
-  tone(speaker_pin, 600, 100);
 }
 
 /// Turns the bi-color LED red
