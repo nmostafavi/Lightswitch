@@ -51,17 +51,6 @@ void Button::update() {
     if (state != filtered_button_state) {
       filtered_button_state = state;
       last_filtered_button_state_change_time = now;
-//      if (state == HIGH) {
-//        Serial.println("HIGH");
-//      } else {
-//        Serial.println("LOW");
-//      }
-    }
-  }
-  // Detect and respond to long button presses using the debounced button input.
-  if (filtered_button_state == LOW) {
-    if ((now - last_filtered_button_state_change_time) > long_press_duration) {
-//      Serial.println("**** LONG PRESS ****");
     }
   }
 }
