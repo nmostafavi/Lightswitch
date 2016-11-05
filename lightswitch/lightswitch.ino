@@ -28,11 +28,7 @@ void setup() {
 void loop() {
   button.update();
   bool state = button.state();
-  if (state == HIGH) {
-    Serial.println("HIGH");
-  } else {
-    Serial.println("LOW");
-  }
+  digitalWrite(led_pin, state);
   if (button.long_pressed()) {
     Serial.println("**** LONG PRESS ****");
   }
