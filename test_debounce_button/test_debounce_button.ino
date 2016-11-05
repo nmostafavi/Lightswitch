@@ -3,11 +3,13 @@
 const int led_pin = 13;
 const int button_pin = 2;
 
-// The debounced button state.
+// The debounced button state. For an INPUT_PULLUP pin, the default state is HIGH.
 bool button_state = HIGH;
 // The unfiltered last state of the button.
 bool last_button_state = HIGH;
+// The last time the button's unfiltered state has changed.
 unsigned long last_button_state_change_time = 0;
+// The number of milliseconds that the button should be consistently in its HIGH or LOW state to register as a button press or button release.
 unsigned long debounce_threshold = 50;
 
 void setup() {
