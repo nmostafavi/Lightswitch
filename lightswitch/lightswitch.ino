@@ -1,5 +1,6 @@
 #include <EEPROM.h>
 #include "Piezo.h"
+#include "LED.h"
 
 #define UNSIGNED_LONG_MAX (2^32 - 1)
 
@@ -16,14 +17,13 @@ const unsigned int num_data_points = 128;  // number of data points stored in EE
 volatile bool button_pressed = false;
 
 Piezo piezo(speaker_pin);
+LED led(bicolor_led_anode_pin, bicolor_led_cathode_pin);
 
 void setup() {
   Serial.begin(9600);
   pinMode(led_pin, OUTPUT);
   pinMode(button_pin, INPUT_PULLUP);
   pinMode(rf_transmit_pin, OUTPUT);
-  pinMode(bicolor_led_anode_pin, OUTPUT);
-  pinMode(bicolor_led_cathode_pin, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(button_pin), button_press, FALLING);
 }
 
@@ -107,23 +107,5 @@ void playback(bool on) {
   }
   digitalWrite(rf_transmit_pin, LOW);
   Serial.println("Finished.");
-}
-
-/// Turns the bi-color LED red
-void led_red() {
-  digitalWrite(bicolor_led_anode_pin, HIGH);
-  digitalWrite(bicolor_led_cathode_pin, LOW);
-}
-
-/// Turns the bi-color LED green
-void led_green() {
-  digitalWrite(bicolor_led_anode_pin, LOW);
-  digitalWrite(bicolor_led_cathode_pin, HIGH);
-}
-
-/// Turns the bi-color LED off
-void led_off() {
-  digitalWrite(bicolor_led_anode_pin, LOW);
-  digitalWrite(bicolor_led_cathode_pin, LOW);
 }
 
