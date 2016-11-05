@@ -1,7 +1,7 @@
 /*
-  LED
-  Library for controlling a red/green bi-color LED.
-  Created by Neema Mostafavi, November 5, 2016.
+ LED
+ Library for controlling a red/green bi-color LED.
+ Created by Neema Mostafavi, November 5, 2016.
 */
 
 #ifndef LED_H

@@ -1,7 +1,7 @@
 /*
-  Piezo
-  Library for playing back simple confirmation sounds on a piezo.
-  Created by Neema Mostafavi, November 5, 2016.
+ Piezo
+ Library for playing back simple confirmation sounds on a piezo.
+ Created by Neema Mostafavi, November 5, 2016.
 */
 
 #ifndef PIEZO_H
