@@ -1,4 +1,4 @@
-/* This program tests the debouncing of a push button. */
+/* This program tests the debouncing of a push button. Wire up a button to Pin 2 and GND, then observe the console for high/low states of the button. */
 
 const int led_pin = 13;
 const int button_pin = 2;
