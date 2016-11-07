@@ -15,9 +15,9 @@
 class RF {
   public:
     RF(int rf_receive_pin, int rf_transmit_pin);
-    // Records 128 data points and stores them in EEPROM
+    // Records 128 data points and stores them in EEPROM. This is a blocking call.
     void record(bool on);
-    // Replays an RF signal stored in EEPROM
+    // Replays an RF signal stored in EEPROM. This is a blocking call.
     void playback(bool on);
   private:
     int _rf_receive_pin;

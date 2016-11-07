@@ -20,17 +20,38 @@ Button button(button_pin);
 // Set up other
 const int led_pin = 13;
 
+bool is_recording = false;
+
 void setup() {
   Serial.begin(9600);
   pinMode(led_pin, OUTPUT);
+  Serial.println("Ready.");
 }
 
 void loop() {
   button.update();
-  bool state = button.state();
-  digitalWrite(led_pin, state);
   if (button.long_pressed()) {
-    Serial.println("**** LONG PRESS ****");
+    Serial.println("Beginning recording of the \"on\" signal.");
+    is_recording = true;
+    // Beep and set LED to red
+    piezo.tone_down();
+    led.red();
+    // Begin recording the "on" signal.
+    rf.record(true);
+    // When finished, confirm with a flat beep.
+    piezo.tone_mid();
+    // Wait until next button press.
+    Serial.println("Finished recording \"on\" signal. Waiting for button press before recording the \"off\" signal.");
+  }
+  if (button.pressed() && is_recording == true) {
+    // Begin recording the "off" signal
+    rf.record(false);
+    // When finished, confirm with an ascending beep and set the LED to green.
+    piezo.tone_up();
+    led.green();
+    Serial.println("Finished recording the \"off\" signal.");
+    Serial.println("Ready.");
+    is_recording = false;
   }
 }
 

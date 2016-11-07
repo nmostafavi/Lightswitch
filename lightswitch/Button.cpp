@@ -25,8 +25,12 @@ Button::Button(int button_pin) {
   pinMode(_button_pin, INPUT_PULLUP);
 }
 
-bool Button::state() {
-  return filtered_button_state;
+bool Button::pressed() {
+  if (filtered_button_state == LOW) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool Button::long_pressed() {
