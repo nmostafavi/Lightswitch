@@ -1,7 +1,9 @@
-#include "Piezo.h"
-#include "LED.h"
-#include "RF.h"
-#include "Button.h"
+#include <Arduino.h>
+#include <EEPROM.h>
+#include <Piezo.h>
+#include <LED.h>
+#include <RF.h>
+#include <Button.h>
 
 // Set up piezo speaker
 const int speaker_pin = 8;
@@ -32,7 +34,6 @@ void loop() {
   button.update();
   if (button.long_pressed()) {
     Serial.println("Beginning recording of the \"on\" signal.");
-    is_recording = true;
     // Beep and set LED to red
     piezo.tone_down();
     led.red();
@@ -42,8 +43,8 @@ void loop() {
     piezo.tone_mid();
     // Wait until next button press.
     Serial.println("Finished recording \"on\" signal. Waiting for button press before recording the \"off\" signal.");
-  }
-  if (button.pressed() && is_recording == true) {
+    is_recording = true;
+  } else if (button.pressed() && is_recording == true) {
     // Begin recording the "off" signal
     rf.record(false);
     // When finished, confirm with an ascending beep and set the LED to green.
@@ -52,6 +53,8 @@ void loop() {
     Serial.println("Finished recording the \"off\" signal.");
     Serial.println("Ready.");
     is_recording = false;
+  } else {
+    // Monitoring mode
+    
   }
 }
-
