@@ -20,8 +20,11 @@ class Button {
     // Whether the button is being held down, and has been held down for long
     // enough to be considered a "long press".
     bool long_pressed();
-    static void update_internal();
   private:
+    // Internal function that gets called every update(). This is a separate
+    // static function so that it can also be called from an interrupt, allowing
+    // for better responsiveness.
+    static void update_internal();
 };
 
 #endif // LED_H

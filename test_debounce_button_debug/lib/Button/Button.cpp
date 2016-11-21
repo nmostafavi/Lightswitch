@@ -6,7 +6,7 @@
 
 #include "Button.h"
 
-static volatile int button_pin;
+static volatile int _button_pin;
 
 // The filtered (i.e. debounced) button state. For an INPUT_PULLUP pin, the default state is HIGH.
 bool filtered_button_state = HIGH;
@@ -22,10 +22,10 @@ unsigned long last_unfiltered_button_state_change_time = 0;
 // The number of milliseconds that the button should be consistently in its HIGH or LOW state to register as a button press or button release.
 unsigned long debounce_threshold = 50;
 
-Button::Button(int pin) {
-  button_pin = pin;
-  pinMode(button_pin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(button_pin), Button::update_internal, CHANGE);
+Button::Button(int button_pin) {
+  _button_pin = button_pin;
+  pinMode(_button_pin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(_button_pin), Button::update_internal, CHANGE);
 }
 
 bool Button::pressed() {
@@ -50,10 +50,9 @@ void Button::update() {
   Button::update_internal();
 }
 
-
 void Button::update_internal() {
   // Perform duration-threshold debouncing of button presses
-  bool state = digitalRead(button_pin);
+  bool state = digitalRead(_button_pin);
   unsigned long now = millis();
   if (state != last_unfiltered_button_state) {
     last_unfiltered_button_state_change_time = now;
@@ -61,11 +60,6 @@ void Button::update_internal() {
   }
   if ((now - last_unfiltered_button_state_change_time) > debounce_threshold) {
     if (state != filtered_button_state) {
-      if (state) {
-        Serial.println("Debounced signal: HIGH");
-      } else {
-        Serial.println("Debounced signal: LOW");
-      }
       filtered_button_state = state;
       last_filtered_button_state_change_time = now;
     }
