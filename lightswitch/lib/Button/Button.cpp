@@ -6,6 +6,8 @@
 
 #include "Button.h"
 
+static volatile int _button_pin;
+
 // The filtered (i.e. debounced) button state. For an INPUT_PULLUP pin, the default state is HIGH.
 bool filtered_button_state = HIGH;
 // The last time the filtered (i.e. debounced) button state has changed.
@@ -23,6 +25,7 @@ unsigned long debounce_threshold = 50;
 Button::Button(int button_pin) {
   _button_pin = button_pin;
   pinMode(_button_pin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(_button_pin), Button::update_internal, CHANGE);
 }
 
 bool Button::pressed() {
@@ -44,6 +47,10 @@ bool Button::long_pressed() {
 }
 
 void Button::update() {
+  Button::update_internal();
+}
+
+void Button::update_internal() {
   // Perform duration-threshold debouncing of button presses
   bool state = digitalRead(_button_pin);
   unsigned long now = millis();
