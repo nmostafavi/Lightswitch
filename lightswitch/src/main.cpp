@@ -32,36 +32,14 @@ void setup() {
 
 void loop() {
   button.update();
-  if (button.long_pressed()) {
-    Serial.println("Beginning recording of the \"on\" signal.");
-    // Beep and set LED to red
-    piezo.tone_down();
+  if (button.pressed()) {
     led.red();
-    // Begin recording the "on" signal.
-    rf.record(true);
-    // When finished, confirm with a flat beep.
-    piezo.tone_mid();
-    // Wait until next button press.
-    Serial.println("Finished recording \"on\" signal. Waiting for button press before recording the \"off\" signal.");
-    is_recording = true;
-  } else if (button.pressed() && is_recording == true) {
-    // Begin recording the "off" signal
-    rf.record(false);
-    // When finished, confirm with an ascending beep and set the LED to green.
     piezo.tone_up();
-    led.green();
-    Serial.println("Finished recording the \"off\" signal.");
-    Serial.println("Ready.");
-    is_recording = false;
-  } else if (button.pressed() && is_recording == false) {
-    // Send a test on/off signal
+    delay(100);
+    // rf.record(true);
     rf.playback(true);
-    delay(1000);
-    rf.playback(false);
+    delay(100);
+    piezo.tone_down();
     led.off();
-  } else {
-    // Monitoring mode: Watch for changes to the input pin, then transmit the
-    // corresponding RF signal.
-
   }
 }

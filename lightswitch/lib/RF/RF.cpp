@@ -3,18 +3,18 @@
  Library for controlling 433 MHz RF transmitter and receiver modules. Records
  received RF signals to EEPROM, which it can play back via the transmitter.
  Capable of remembering the "on" and "off" signals of common household RF light
- switches. 
+ switches.
  Created by Neema Mostafavi, November 5, 2016.
 */
 
 #include "RF.h"
 #include <EEPROM.h>
 
-#define UNSIGNED_LONG_MAX (2^32 - 1)
+#define UNSIGNED_LONG_MAX ((2^32) - 1)
 
 const int threshold_high = 500;  // any received value greater than this is considered HIGH
 const int threshold_low = 200;  // any received value less than this is considered LOW
-const unsigned int num_data_points = 128;  // number of data points stored in EEPROM for each recorded remote control signal
+const unsigned int num_data_points = 256;  // number of data points stored in EEPROM for each recorded remote control signal
 
 RF::RF(int rf_receive_pin, int rf_transmit_pin) {
   _rf_receive_pin = rf_receive_pin;
@@ -23,11 +23,14 @@ RF::RF(int rf_receive_pin, int rf_transmit_pin) {
 }
 
 void RF::record(bool on) {
+  if (on == false) {
+    return;
+  }
   bool previous_state = LOW;
   unsigned long last_state_change_time = 0;
-  int count = 0;
+  unsigned int count = 0;
   unsigned long data[num_data_points];  // stores the duration of each high/low state in microseconds
-  for (int i = 0; i < num_data_points; i++) {
+  for (unsigned int i = 0; i < num_data_points; i++) {
     data[i] = 0;
   }
 //  digitalWrite(led_pin, HIGH);
@@ -63,7 +66,7 @@ void RF::record(bool on) {
 //  Serial.print("Captured ");
 //  Serial.print(count);
 //  Serial.println(" data points.");
-  for (int i = 0; i < num_data_points; i++) {
+  for (unsigned int i = 0; i < num_data_points; i++) {
 //    Serial.print(i);
 //    Serial.print("\t");
 //    Serial.println(data[i]);
@@ -77,7 +80,7 @@ void RF::record(bool on) {
 
 void RF::playback(bool on) {
 //  Serial.println("Playing back...");
-  for (int i = 0; i < num_data_points; i++) {
+  for (unsigned int i = 0; i < num_data_points; i++) {
     bool state = i % 2;
     int address = i * sizeof(unsigned long);
     if (on == true) {
