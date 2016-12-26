@@ -2,8 +2,8 @@
 #include <EEPROM.h>
 #include <Piezo.h>
 #include <LED.h>
-#include <RF.h>
 #include <Button.h>
+#include <RCSwitch.h>
 
 // Set up piezo speaker
 const int speaker_pin = 8;
@@ -12,10 +12,10 @@ Piezo piezo(speaker_pin);
 const int bicolor_led_anode_pin = 7;
 const int bicolor_led_cathode_pin = 6;
 LED led(bicolor_led_anode_pin, bicolor_led_cathode_pin);
-// Set up RF receiver/transmitter and recording to EEPROM
-const int rf_receive_pin = A0;
+// Set up RF receiver/transmitter
+const int rf_interrupt = digitalPinToInterrupt(3);
 const int rf_transmit_pin = 4;
-RF rf(rf_receive_pin, rf_transmit_pin);
+RCSwitch rf = RCSwitch();
 // Set up button
 const int button_pin = 2;
 Button button(button_pin);
