@@ -28,9 +28,6 @@ bool did_record_on_signal = false;
 bool is_recording_off_signal = false;
 bool did_record_off_signal = false;
 
-unsigned long on_signal = 0;
-unsigned long off_signal = 0;
-
 void setup() {
   Serial.begin(9600);
   pinMode(led_pin, OUTPUT);
@@ -60,6 +57,10 @@ void loop() {
       did_record_off_signal = false;
     } else if (button.pressed()) {
       // Send a test on/off signal
+      unsigned long on_signal = 0;
+      EEPROM.get(0, on_signal);
+      unsigned long off_signal = 0;
+      EEPROM.get(sizeof(unsigned long), off_signal);
       rf.send(on_signal, 24);
       for (int i = 0; i < 6; i++) {
         led.green();
@@ -88,7 +89,7 @@ void loop() {
         if (is_recording_on_signal == true) {
           Serial.print("Received 'on' signal: ");
           Serial.println(value);
-          on_signal = value;//Save to EEPROM
+          EEPROM.put(0, value);
           piezo.tone_mid();
           for (int i = 0; i < 4; i++) {
             led.off();
@@ -102,7 +103,7 @@ void loop() {
         if (is_recording_off_signal == true) {
           Serial.print("Received 'off' signal: ");
           Serial.println(value);
-          off_signal = value;//Save to EEPROM
+          EEPROM.put(sizeof(unsigned long), value);
           piezo.tone_up();
           for (int i = 0; i < 4; i++) {
             led.off();
