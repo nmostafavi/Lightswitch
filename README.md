@@ -11,6 +11,9 @@ My apartment has a light switch by the entrance that toggles a poorly-located ou
 1. Teach the Arduino to learn the light switch remote control codes and play them back on-demand.
 2. Monitor a switched power socket for power-on and power-off, then automatically transmit the corresponding on/off radio frequency signal.
 
+## The Design
+[[Schematic and photos go here]]
+
 ## The Result
 It works! I have a light switch that can control multiple light sockets scattered throughout my living room.
 
