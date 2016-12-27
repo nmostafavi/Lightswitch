@@ -19,6 +19,9 @@ RCSwitch rf = RCSwitch();
 // Set up button
 const int button_pin = 2;
 Button button(button_pin);
+// Set up monitoring of switch on/off signal
+const int monitoring_pin = A0;
+int last_monitoring_state = -1;
 // Set up other
 const int led_pin = 13;
 
@@ -72,6 +75,25 @@ void loop() {
     } else {
       // Monitoring mode: Watch for changes to the input pin, then transmit the
       // corresponding RF signal.
+      int value = analogRead(monitoring_pin);
+      bool current_state = LOW;
+      if (value > 256) {
+        current_state = HIGH;
+      }
+      if (current_state != last_monitoring_state) {
+        last_monitoring_state = current_state;
+        if (current_state == HIGH) {
+          led.green();
+          unsigned long on_signal = 0;
+          EEPROM.get(0, on_signal);
+          rf.send(on_signal, 24);
+        } else {
+          led.off();
+          unsigned long off_signal = 0;
+          EEPROM.get(sizeof(unsigned long), off_signal);
+          rf.send(off_signal, 24);
+        }
+      }
     }
   }
   if (is_recording == true) {
