@@ -44,18 +44,27 @@ void loop() {
   button.update();
   if (is_recording == false) {
     if (button.long_pressed()) {
+      for (int i = 0; i < 4; i++) {
+        led.red();
+        delay(100);
+        led.off();
+        delay(100);
+      }
       led.red();
-      // piezo.tone_down();
+      piezo.tone_down();
       rf.enableReceive(rf_interrupt);
       is_recording = true;
       is_recording_on_signal = true;
     } else if (button.pressed()) {
       // Send a test on/off signal
-      led.red();
       rf.send(on_signal, 24);
-      delay(1000);
+      for (int i = 0; i < 6; i++) {
+        led.green();
+        delay(100);
+        led.off();
+        delay(100);
+      }
       rf.send(off_signal, 24);
-      led.off();
     } else {
       // Monitoring mode: Watch for changes to the input pin, then transmit the
       // corresponding RF signal.
@@ -77,7 +86,7 @@ void loop() {
           Serial.print("Received 'on' signal: ");
           Serial.println(value);
           on_signal = value;//Save to EEPROM
-          // piezo.tone_mid();
+          piezo.tone_mid();
           is_recording_on_signal = false;
           did_record_on_signal = true;
         }
@@ -86,7 +95,7 @@ void loop() {
           Serial.println(value);
           off_signal = value;//Save to EEPROM
           led.green();
-          // piezo.tone_up();
+          piezo.tone_up();
           is_recording_off_signal = true;
           did_record_off_signal = true;
           is_recording = false;
