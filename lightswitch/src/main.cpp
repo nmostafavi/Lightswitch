@@ -55,6 +55,9 @@ void loop() {
       rf.enableReceive(rf_interrupt);
       is_recording = true;
       is_recording_on_signal = true;
+      did_record_on_signal = false;
+      is_recording_off_signal = false;
+      did_record_off_signal = false;
     } else if (button.pressed()) {
       // Send a test on/off signal
       rf.send(on_signal, 24);
@@ -79,14 +82,20 @@ void loop() {
     if (rf.available()) {
       unsigned long value = rf.getReceivedValue();
       unsigned int bit_length = rf.getReceivedBitlength();
-      unsigned int delay = rf.getReceivedDelay();
+      unsigned int pulse_length = rf.getReceivedDelay();
       unsigned int protocol = rf.getReceivedProtocol();
-      if (value != 0 && bit_length == 24 && delay == 190 && protocol == 1) {
+      if (value != 0 && bit_length == 24 && pulse_length == 190 && protocol == 1) {
         if (is_recording_on_signal == true) {
           Serial.print("Received 'on' signal: ");
           Serial.println(value);
           on_signal = value;//Save to EEPROM
           piezo.tone_mid();
+          for (int i = 0; i < 4; i++) {
+            led.off();
+            delay(100);
+            led.red();
+            delay(100);
+          }
           is_recording_on_signal = false;
           did_record_on_signal = true;
         }
@@ -94,8 +103,14 @@ void loop() {
           Serial.print("Received 'off' signal: ");
           Serial.println(value);
           off_signal = value;//Save to EEPROM
-          led.green();
           piezo.tone_up();
+          for (int i = 0; i < 4; i++) {
+            led.off();
+            delay(100);
+            led.green();
+            delay(100);
+          }
+          led.off();
           is_recording_off_signal = true;
           did_record_off_signal = true;
           is_recording = false;
