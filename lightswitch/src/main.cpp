@@ -27,38 +27,70 @@ bool is_recording = false;
 void setup() {
   Serial.begin(9600);
   pinMode(led_pin, OUTPUT);
+  // rf.enableReceive(rf_interrupt);
+  rf.enableTransmit(rf_transmit_pin);
+  rf.setProtocol(1);
+  rf.setPulseLength(190);
   Serial.println("Ready.");
 }
 
 void loop() {
-  button.update();
-  if (button.long_pressed()) {
-    Serial.println("Beginning recording of the \"on\" signal.");
-    // Beep and set LED to red
-    // piezo.tone_down();
-    led.red();
-    // Begin recording the "on" signal.
-    delay(2000);  // rf.record(true);
-    // When finished, confirm with a flat beep.
-    // piezo.tone_mid();
-    // Wait until next button press.
-    Serial.println("Finished recording \"on\" signal. Waiting for button press before recording the \"off\" signal.");
-    is_recording = true;
-  } else if (button.pressed() && is_recording == true) {
-    // Begin recording the "off" signal
-    delay(2000);  // rf.record(false);
-    // When finished, confirm with an ascending beep and set the LED to green.
-    // piezo.tone_up();
-    led.green();
-    Serial.println("Finished recording the \"off\" signal.");
-    Serial.println("Ready.");
-    is_recording = false;
-  } else if (button.pressed() && is_recording == false) {
-    // Send a test on/off signal
 
-  } else {
-    // Monitoring mode: Watch for changes to the input pin, then transmit the
-    // corresponding RF signal.
+  rf.send(5510451, 24);
+  delay(1000);
+  rf.send(5510460, 24);
+  delay(1000);
 
-  }
+  // if (rf.available()) {
+  //   int value = rf.getReceivedValue();
+  //   if (value == 0) {
+  //     Serial.println("Unknown encoding.");
+  //   } else {
+  //     Serial.print("Received ");
+  //     Serial.print(rf.getReceivedValue());
+  //     Serial.print(" / ");
+  //     Serial.print(rf.getReceivedBitlength());
+  //     Serial.print("bit ");
+  //     Serial.print(" PulseLength: ");
+  //     Serial.print(rf.getReceivedDelay());
+  //     Serial.print(" microseconds");
+  //     Serial.print(" Protocol: ");
+  //     Serial.println(rf.getReceivedProtocol());
+  //   }
+  //   rf.resetAvailable();
+  // }
+
+
+
+
+  // button.update();
+  // if (button.long_pressed()) {
+  //   Serial.println("Beginning recording of the \"on\" signal.");
+  //   // Beep and set LED to red
+  //   // piezo.tone_down();
+  //   led.red();
+  //   // Begin recording the "on" signal.
+  //   delay(2000);  // rf.record(true);
+  //   // When finished, confirm with a flat beep.
+  //   // piezo.tone_mid();
+  //   // Wait until next button press.
+  //   Serial.println("Finished recording \"on\" signal. Waiting for button press before recording the \"off\" signal.");
+  //   is_recording = true;
+  // } else if (button.pressed() && is_recording == true) {
+  //   // Begin recording the "off" signal
+  //   delay(2000);  // rf.record(false);
+  //   // When finished, confirm with an ascending beep and set the LED to green.
+  //   // piezo.tone_up();
+  //   led.green();
+  //   Serial.println("Finished recording the \"off\" signal.");
+  //   Serial.println("Ready.");
+  //   is_recording = false;
+  // } else if (button.pressed() && is_recording == false) {
+  //   // Send a test on/off signal
+  //
+  // } else {
+  //   // Monitoring mode: Watch for changes to the input pin, then transmit the
+  //   // corresponding RF signal.
+  //
+  // }
 }
