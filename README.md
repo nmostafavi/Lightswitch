@@ -13,3 +13,7 @@ My apartment has a light switch by the entrance that toggles a poorly-located ou
 
 ## The Result
 It works! I have a light switch that can control multiple light sockets scattered throughout my living room.
+
+### Resources
+http://platformio.org
+https://github.com/sui77/rc-switch
