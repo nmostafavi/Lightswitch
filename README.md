@@ -20,3 +20,4 @@ It works! I have a light switch that can control multiple light sockets scattere
 ### Resources
 http://platformio.org
 https://github.com/sui77/rc-switch
+http://arduinobasics.blogspot.com.au/2014/07/433-mhz-rf-module-with-arduino-tutorial_30.html
