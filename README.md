@@ -30,11 +30,11 @@ It works! I have a light switch that can control multiple light sockets scattere
 ## Photos
 Here are some photos from development.
 
-![Perfboard fitted in plastic housing](images/IMG_2034.jpg)
-![Bi-color LED and push-button attached to perfboard with hot glue](images/IMG_2037.jpg)
-![Back-side of circuit board](images/IMG_2042.jpg)
-![Front-side of circuit board](images/IMG_2046.jpg)
-![Coding from a coffee shop](images/IMG_2058.jpg)
+<img src="images/IMG_2034.jpg" height="1024" alt="Perfboard fitted in plastic housing">
+<img src="images/IMG_2037.jpg" height="1024" alt="Bi-color LED and push-button attached to perfboard with hot glue">
+<img src="images/IMG_2042.jpg" height="1024" alt="Back-side of circuit board">
+<img src="images/IMG_2046.jpg" height="1024" alt="Front-side of circuit board">
+<img src="images/IMG_2058.jpg" height="1024" alt="Coding from a coffee shop">
 
 ### Resources
 * http://platformio.org
