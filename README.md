@@ -5,8 +5,8 @@ How I wirelessly relocated a switched light socket using Arduino
 My apartment has a light switch by the entrance that toggles a poorly-located power outlet. I would like to transplant that outlet, but doing so would violate my rental agreement. The solution? Use an Arduino to wirelessly relocate the outlet!
 
 ## Hardware
-1. Five pack of Etekcity 433 MHz RF power sockets with remote control. These can be obtained for around $25 US on Amazon. Other brands of similar compatible hardware exist, however this one is generally known to work.
-2. 433 MHz transmitter and receiver modules. I bought six of each for $10 total.
+1. Five pack of [Etekcity 433 MHz RF power sockets](https://www.amazon.com/gp/product/B00DQELHBS/) with remote control. These can be obtained for around $25 US on Amazon. Other brands of similar compatible hardware exist, however this one is generally known to work.
+2. [433 MHz transmitter and receiver modules](https://www.amazon.com/gp/product/B017AYH5G0/). I bought six of each for $10 total.
 
 ### Additional hardware:
 1. An Arduino. I used an Arduino Micro.
