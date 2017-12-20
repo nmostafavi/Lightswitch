@@ -1,4 +1,5 @@
-# Wirelessly relocated light socket using Arduino
+# Lightswitch for Arduino
+How I wirelessly relocated a switched light socket using Arduino
 
 ## Background
 My apartment has a light switch by the entrance that toggles a poorly-located power outlet. I would like to transplant that outlet, but doing so would violate my rental agreement. The solution? Use an Arduino to wirelessly relocate the outlet!
